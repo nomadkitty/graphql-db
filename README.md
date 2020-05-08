@@ -1,1 +1,1 @@
-# graphql-db
+# Recipe App with Prisma + React

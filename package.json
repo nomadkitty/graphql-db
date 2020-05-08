@@ -1,0 +1,20 @@
+{
+  "name": "recipi-app-with-prisma-react",
+  "version": "1.0.0",
+  "description": "Recipe app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nomadkitty/Recipi-app-with-prisma-react.git"
+  },
+  "author": "Jojo Zhang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nomadkitty/Recipi-app-with-prisma-react/issues"
+  },
+  "homepage": "https://github.com/nomadkitty/Recipi-app-with-prisma-react#readme",
+  "dependencies": {}
+}
