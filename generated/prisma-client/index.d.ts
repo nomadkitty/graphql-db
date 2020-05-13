@@ -16,7 +16,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
-  user: (where?: UserWhereInput) => Promise<boolean>;
+  recipe: (where?: RecipeWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -38,47 +38,47 @@ export interface Prisma {
    * Queries
    */
 
-  user: (where: UserWhereUniqueInput) => UserNullablePromise;
-  users: (args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
+  recipe: (where: RecipeWhereUniqueInput) => RecipeNullablePromise;
+  recipes: (args?: {
+    where?: RecipeWhereInput;
+    orderBy?: RecipeOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<User>;
-  usersConnection: (args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
+  }) => FragmentableArray<Recipe>;
+  recipesConnection: (args?: {
+    where?: RecipeWhereInput;
+    orderBy?: RecipeOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => UserConnectionPromise;
+  }) => RecipeConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
    * Mutations
    */
 
-  createUser: (data: UserCreateInput) => UserPromise;
-  updateUser: (args: {
-    data: UserUpdateInput;
-    where: UserWhereUniqueInput;
-  }) => UserPromise;
-  updateManyUsers: (args: {
-    data: UserUpdateManyMutationInput;
-    where?: UserWhereInput;
+  createRecipe: (data: RecipeCreateInput) => RecipePromise;
+  updateRecipe: (args: {
+    data: RecipeUpdateInput;
+    where: RecipeWhereUniqueInput;
+  }) => RecipePromise;
+  updateManyRecipes: (args: {
+    data: RecipeUpdateManyMutationInput;
+    where?: RecipeWhereInput;
   }) => BatchPayloadPromise;
-  upsertUser: (args: {
-    where: UserWhereUniqueInput;
-    create: UserCreateInput;
-    update: UserUpdateInput;
-  }) => UserPromise;
-  deleteUser: (where: UserWhereUniqueInput) => UserPromise;
-  deleteManyUsers: (where?: UserWhereInput) => BatchPayloadPromise;
+  upsertRecipe: (args: {
+    where: RecipeWhereUniqueInput;
+    create: RecipeCreateInput;
+    update: RecipeUpdateInput;
+  }) => RecipePromise;
+  deleteRecipe: (where: RecipeWhereUniqueInput) => RecipePromise;
+  deleteManyRecipes: (where?: RecipeWhereInput) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -88,9 +88,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
-  user: (
-    where?: UserSubscriptionWhereInput
-  ) => UserSubscriptionPayloadSubscription;
+  recipe: (
+    where?: RecipeSubscriptionWhereInput
+  ) => RecipeSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -101,15 +101,30 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type UserOrderByInput = "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC";
+export type RecipeOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "title_ASC"
+  | "title_DESC"
+  | "ingredients_ASC"
+  | "ingredients_DESC"
+  | "directions_ASC"
+  | "directions_DESC"
+  | "published_ASC"
+  | "published_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export type UserWhereUniqueInput = AtLeastOne<{
+export type RecipeWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  title?: Maybe<String>;
 }>;
 
-export interface UserWhereInput {
+export interface RecipeWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -124,96 +139,171 @@ export interface UserWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
-  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
-  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  ingredients?: Maybe<String>;
+  ingredients_not?: Maybe<String>;
+  ingredients_in?: Maybe<String[] | String>;
+  ingredients_not_in?: Maybe<String[] | String>;
+  ingredients_lt?: Maybe<String>;
+  ingredients_lte?: Maybe<String>;
+  ingredients_gt?: Maybe<String>;
+  ingredients_gte?: Maybe<String>;
+  ingredients_contains?: Maybe<String>;
+  ingredients_not_contains?: Maybe<String>;
+  ingredients_starts_with?: Maybe<String>;
+  ingredients_not_starts_with?: Maybe<String>;
+  ingredients_ends_with?: Maybe<String>;
+  ingredients_not_ends_with?: Maybe<String>;
+  directions?: Maybe<String>;
+  directions_not?: Maybe<String>;
+  directions_in?: Maybe<String[] | String>;
+  directions_not_in?: Maybe<String[] | String>;
+  directions_lt?: Maybe<String>;
+  directions_lte?: Maybe<String>;
+  directions_gt?: Maybe<String>;
+  directions_gte?: Maybe<String>;
+  directions_contains?: Maybe<String>;
+  directions_not_contains?: Maybe<String>;
+  directions_starts_with?: Maybe<String>;
+  directions_not_starts_with?: Maybe<String>;
+  directions_ends_with?: Maybe<String>;
+  directions_not_ends_with?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  published_not?: Maybe<Boolean>;
+  AND?: Maybe<RecipeWhereInput[] | RecipeWhereInput>;
+  OR?: Maybe<RecipeWhereInput[] | RecipeWhereInput>;
+  NOT?: Maybe<RecipeWhereInput[] | RecipeWhereInput>;
 }
 
-export interface UserCreateInput {
+export interface RecipeCreateInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  title: String;
+  ingredients: String;
+  directions: String;
+  published?: Maybe<Boolean>;
 }
 
-export interface UserUpdateInput {
-  name?: Maybe<String>;
+export interface RecipeUpdateInput {
+  title?: Maybe<String>;
+  ingredients?: Maybe<String>;
+  directions?: Maybe<String>;
+  published?: Maybe<Boolean>;
 }
 
-export interface UserUpdateManyMutationInput {
-  name?: Maybe<String>;
+export interface RecipeUpdateManyMutationInput {
+  title?: Maybe<String>;
+  ingredients?: Maybe<String>;
+  directions?: Maybe<String>;
+  published?: Maybe<Boolean>;
 }
 
-export interface UserSubscriptionWhereInput {
+export interface RecipeSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  node?: Maybe<RecipeWhereInput>;
+  AND?: Maybe<RecipeSubscriptionWhereInput[] | RecipeSubscriptionWhereInput>;
+  OR?: Maybe<RecipeSubscriptionWhereInput[] | RecipeSubscriptionWhereInput>;
+  NOT?: Maybe<RecipeSubscriptionWhereInput[] | RecipeSubscriptionWhereInput>;
 }
 
 export interface NodeNode {
   id: ID_Output;
 }
 
-export interface User {
+export interface Recipe {
   id: ID_Output;
-  name: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  title: String;
+  ingredients: String;
+  directions: String;
+  published: Boolean;
 }
 
-export interface UserPromise extends Promise<User>, Fragmentable {
+export interface RecipePromise extends Promise<Recipe>, Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  ingredients: () => Promise<String>;
+  directions: () => Promise<String>;
+  published: () => Promise<Boolean>;
 }
 
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
+export interface RecipeSubscription
+  extends Promise<AsyncIterator<Recipe>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  title: () => Promise<AsyncIterator<String>>;
+  ingredients: () => Promise<AsyncIterator<String>>;
+  directions: () => Promise<AsyncIterator<String>>;
+  published: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface UserNullablePromise
-  extends Promise<User | null>,
+export interface RecipeNullablePromise
+  extends Promise<Recipe | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  ingredients: () => Promise<String>;
+  directions: () => Promise<String>;
+  published: () => Promise<Boolean>;
 }
 
-export interface UserConnection {
+export interface RecipeConnection {
   pageInfo: PageInfo;
-  edges: UserEdge[];
+  edges: RecipeEdge[];
 }
 
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
+export interface RecipeConnectionPromise
+  extends Promise<RecipeConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
+  edges: <T = FragmentableArray<RecipeEdge>>() => T;
+  aggregate: <T = AggregateRecipePromise>() => T;
 }
 
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
+export interface RecipeConnectionSubscription
+  extends Promise<AsyncIterator<RecipeConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<RecipeEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateRecipeSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -239,35 +329,35 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserEdge {
-  node: User;
+export interface RecipeEdge {
+  node: Recipe;
   cursor: String;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
+export interface RecipeEdgePromise extends Promise<RecipeEdge>, Fragmentable {
+  node: <T = RecipePromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface RecipeEdgeSubscription
+  extends Promise<AsyncIterator<RecipeEdge>>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
+  node: <T = RecipeSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateUser {
+export interface AggregateRecipe {
   count: Int;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
+export interface AggregateRecipePromise
+  extends Promise<AggregateRecipe>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface AggregateRecipeSubscription
+  extends Promise<AsyncIterator<AggregateRecipe>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -288,48 +378,63 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface UserSubscriptionPayload {
+export interface RecipeSubscriptionPayload {
   mutation: MutationType;
-  node: User;
+  node: Recipe;
   updatedFields: String[];
-  previousValues: UserPreviousValues;
+  previousValues: RecipePreviousValues;
 }
 
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
+export interface RecipeSubscriptionPayloadPromise
+  extends Promise<RecipeSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
+  node: <T = RecipePromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
+  previousValues: <T = RecipePreviousValuesPromise>() => T;
 }
 
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+export interface RecipeSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<RecipeSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
+  node: <T = RecipeSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  previousValues: <T = RecipePreviousValuesSubscription>() => T;
 }
 
-export interface UserPreviousValues {
+export interface RecipePreviousValues {
   id: ID_Output;
-  name: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  title: String;
+  ingredients: String;
+  directions: String;
+  published: Boolean;
 }
 
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
+export interface RecipePreviousValuesPromise
+  extends Promise<RecipePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  ingredients: () => Promise<String>;
+  directions: () => Promise<String>;
+  published: () => Promise<Boolean>;
 }
 
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
+export interface RecipePreviousValuesSubscription
+  extends Promise<AsyncIterator<RecipePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  title: () => Promise<AsyncIterator<String>>;
+  ingredients: () => Promise<AsyncIterator<String>>;
+  directions: () => Promise<AsyncIterator<String>>;
+  published: () => Promise<AsyncIterator<Boolean>>;
 }
 
 /*
@@ -344,14 +449,24 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+DateTime scalar input type, allowing Date
 */
-export type Int = number;
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+*/
+export type Int = number;
 
 export type Long = string;
 
@@ -361,7 +476,7 @@ export type Long = string;
 
 export const models: Model[] = [
   {
-    name: "User",
+    name: "Recipe",
     embedded: false
   }
 ];
